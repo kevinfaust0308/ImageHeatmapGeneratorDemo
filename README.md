@@ -19,6 +19,7 @@ Choose different settings on the website and click generate
 numpy
 algorithmia
 matplotlib
+flask
 ```
 
 ### License
