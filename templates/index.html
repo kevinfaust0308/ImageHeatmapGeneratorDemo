@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+          crossorigin="anonymous">
+
+    <link rel="stylesheet" href="../static/css/main.css">
+
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+
+<div class="container">
+
+    <div class="jumbotron">
+        <h1>Demo</h1>
+        <p>View which parts of the demo image (512x512) is classified as gray matter, white matter,
+            oligodendroglioma (lesion), or just blank space</p>
+
+        <p>A deep CNN model was trained on images of size 256x256 which is being called as an api. If an error appears,
+            it is most likely because I have run out of free credits
+            for the month.</p>
+
+        <p><a class="btn btn-primary btn-lg" href="https://github.com/kevinfaust0308/KerasImageHeatmapGenerator"
+              role="button">View on github</a></p>
+    </div>
+
+
+    <img id='demo-img' src="../{{ img }}"/>
+
+    <form method="post" action='/'>
+
+        <div class="form-check form-element">
+            <label class="form-check-label">
+                <input name='multi' class="form-check-input" type="checkbox">
+                Generate multi-layered heatmap
+            </label>
+        </div>
+        <div class="form-group form-element">
+            <label for="example-number-input" class="col-2 col-form-label">Overlay alpha transparency [0-1]</label>
+            <div class="col-10">
+                <input name='overlay_alpha' class="form-control" type="number" value="0.3" step="0.01" max="1" min="0"
+                       id="example-number-input">
+            </div>
+        </div>
+        <div class="form-group form-element">
+            <h3>If multi-layered heatmap is checked</h3>
+            <label for="example-number-input" class="col-2 col-form-label">For each subtile, generate heatmap of only
+                the top x confident classes</label>
+            <div class="col-10">
+                <input name="show_top_x_classes" class="form-control" type="number" value="3" min="0" max="4"
+                       id="example-number-input">
+            </div>
+        </div>
+        <div class="form-group form-element">
+            <h3>If multi-layered heatmap is NOT checked</h3>
+            <label for="exampleSelect1">Generate heatmap of the following class</label>
+            <select name="heatmap_class" class="form-control" id="exampleSelect1">
+                <option>Blank</option>
+                <option>Gray Mat.</option>
+                <option>Lesion</option>
+                <option>White Mat.</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-default form-element">Generate heatmap</button>
+
+    </form>
+
+    <h4 style="margin-bottom: 20px">May take up to a minute to generate</h4>
+
+</div>
+
+
+</body>
+</html>
