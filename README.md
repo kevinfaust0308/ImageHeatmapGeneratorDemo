@@ -7,7 +7,7 @@ https://github.com/kevinfaust0308/KerasImageHeatmapGenerator
 Simply run in the terminal:
 
 ```
-set FLASK_APP=AlgorithmiaHeatmap
+set FLASK_APP=AlgorithmiaHeatmap.py
 flask run
 ```
 
