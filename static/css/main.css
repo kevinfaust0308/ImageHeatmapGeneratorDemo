@@ -1,18 +1,29 @@
-#demo-img {
-    display: block;
-    margin: 0 auto;
-    max-width: 30%;
+#wrapper {
+    padding: 3%;
 }
 
-* {
-    font-family: 'Raleway', sans-serif;
+#example-heatmap-container {
+    margin: 20px 0;
+    text-align: center;
 }
 
+.example-heatmap {
+    width: 30%;
 
-body {
-    background-color: #EDF7FA;
 }
 
-.form-element {
-    margin: 20px;
+.jumbotron {
+    background-color: #EDE6F5;
+}
+
+.jumbotron h1 {
+    text-align: center;
+}
+
+#multi-layer-options {
+    display: none;
+}
+
+form label {
+    font-size: 18px;
 }

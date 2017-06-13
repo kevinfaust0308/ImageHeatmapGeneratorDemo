@@ -4,8 +4,11 @@ app = Flask(__name__)
 
 import numpy as np
 import Algorithmia
-import matplotlib.pyplot as plt
+import cv2
 import time
+
+DEMO_IMG_PATH = 'static/demo_img.jpg'
+OUT_IMG_PATH = 'static/demo_img_heatmap.jpg'
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -20,18 +23,16 @@ def home_screen():
 
         start = time.time()
         avg_pred = generate_heatmap(multi, alpha, heatmap_class, show_top_x_classes)
-        tot_time = time.time() - start
-        heatmap = 'static/heatmap.jpg'
+        tot_time = '{:.2f}'.format(time.time() - start)
 
-        return render_template('result.html', heatmap=heatmap, avg_pred=avg_pred, tot_time=tot_time)
+        return render_template('result.html', heatmap=OUT_IMG_PATH, avg_pred=avg_pred, tot_time=tot_time)
 
     else:
-        img = 'static/demo_img.jpg'
-        return render_template('index.html', img=img)
+        return render_template('index.html', img=DEMO_IMG_PATH)
 
 
 def generate_heatmap(multi, alpha, heatmap_class, show_top_x_classes):
-    im = plt.imread('static/demo_img.jpg').tolist()
+    im = cv2.cvtColor(cv2.imread(DEMO_IMG_PATH), cv2.COLOR_BGR2RGB).tolist()
 
     api_configs = {
         'multi': multi,
@@ -48,7 +49,7 @@ def generate_heatmap(multi, alpha, heatmap_class, show_top_x_classes):
     heatmap = np.array(res['heatmap']).astype(np.uint8)
     avg_pred = res['avg_pred'].split('\n')
 
-    plt.imsave('static/heatmap.jpg', heatmap)
+    cv2.imwrite(OUT_IMG_PATH, cv2.cvtColor(heatmap, cv2.COLOR_RGB2BGR))
 
     return avg_pred
 

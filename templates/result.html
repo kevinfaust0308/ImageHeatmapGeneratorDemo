@@ -14,12 +14,32 @@
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
           crossorigin="anonymous">
 
-    <link rel="stylesheet" href="../static/css/main.css">
+    <link rel="stylesheet" href="../static/css/common.css">
 
     <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
 
+    <style>
+        .btn {
+            display: block;
+            margin: 50px auto 0;
+        }
+    </style>
+
 </head>
 <body>
+
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">
+                <img style="width: 35px; margin-top: -7px" src="../static/home.png"/>
+                <p>Demo</p>
+            </a>
+        </div>
+    </div>
+</nav>
+
 
 <div class="container">
 
@@ -33,6 +53,8 @@
         <h4>{{ pred }}</h4>
     {% endfor %}
 
+    <!-- Contextual button for informational alert messages -->
+    <a href="/" class="btn btn-success">Generate again</a>
 
 </div>
 
