@@ -4,21 +4,19 @@ https://github.com/kevinfaust0308/KerasImageHeatmapGenerator
 
 ## Getting Started
 
-Simply run in the terminal:
+Within code directory, run in terminal:
 
 ```
 set FLASK_APP=AlgorithmiaHeatmap.py
 flask run
 ```
 
-Choose different settings on the website and click generate
+On the site, upload an image or use the provided ones, choose different settings, and click generate
 
 ### Prerequisites
 
 ```
-numpy
 algorithmia
-opencv
 flask
 ```
 
