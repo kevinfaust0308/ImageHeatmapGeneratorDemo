@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>HeatmapGen</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -15,15 +15,9 @@
           crossorigin="anonymous">
 
     <link rel="stylesheet" href="../static/css/common.css">
+    <link rel="stylesheet" href="../static/css/result.css">
 
     <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
-
-    <style>
-        .btn {
-            display: block;
-            margin: 50px auto 0;
-        }
-    </style>
 
 </head>
 <body>
@@ -40,23 +34,51 @@
     </div>
 </nav>
 
-
-<div class="container">
+<div class="container wrapper">
 
     <div class="alert alert-success" role="alert">
         <strong>Completed!</strong> Took {{ tot_time }} seconds for heatmap and average predictions generation
     </div>
 
-    <img id='demo-img' src="../{{ heatmap }}"/>
+    <div class="page-header titletext">
+        <h1>Results</h1>
+    </div>
 
-    {% for pred in avg_pred %}
-        <h4>{{ pred }}</h4>
+    <form action="/" method="GET" class="homebutton">
+        <button type="submit" class="btn btn-default">Generate again</button>
+    </form>
+
+
+        {% for row in data %}
+
+        <div class="row">
+
+            <div class="col-sm-12">
+
+                <h4 class="imgpathtext">{{ row[0].filename }}</h4>
+                <hr>
+
+                <img src="{{ row[1] }}"/>
+                <hr>
+
+                {% for pred in row[2] %}
+                    <p>{{ pred }}</p>
+                {% endfor %}
+
+                <a href="{{ row[1] }}" download="heatmap" class="btn btn-primary" role="button">Download</a>
+
+            </div>
+
+        </div>
+
+        <hr>
+
     {% endfor %}
 
-    <!-- Contextual button for informational alert messages -->
-    <a href="/" class="btn btn-success">Generate again</a>
-
 </div>
+
+
+
 
 
 </body>

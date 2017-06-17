@@ -1,14 +1,13 @@
 from flask import Flask, render_template, request
+from werkzeug.utils import secure_filename
+
+import time
+import os
+
+from heatmap_api import generate_heatmaps_and_preds, upload_files_to_api
 
 app = Flask(__name__)
-
-import numpy as np
-import Algorithmia
-import cv2
-import time
-
-DEMO_IMG_PATH = 'static/demo_img.jpg'
-OUT_IMG_PATH = 'static/demo_img_heatmap.jpg'
+app.config['UPLOAD_FOLDER'] = 'uploads/'
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -21,37 +20,40 @@ def home_screen():
         heatmap_class = request.form['heatmap_class']
         show_top_x_classes = int(request.form['show_top_x_classes'])
 
+        # get all selected files
+        selected_file_paths = request.files.getlist("multiplefiles")
+
+        uploaded_flask_files = []
+        for f in selected_file_paths:
+            # upload
+            filename = secure_filename(f.filename)
+            f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            filename = 'uploads/' + filename
+            uploaded_flask_files.append(filename)
+
+        # upload the images uploaded to flask to our api which will temporary store the images for 24 hours
+        api_file_paths = upload_files_to_api(uploaded_flask_files)
+
         start = time.time()
-        avg_pred = generate_heatmap(multi, alpha, heatmap_class, show_top_x_classes)
+        # generate heatmaps and predictions
+        static_heatmap_paths, avg_preds = generate_heatmaps_and_preds(api_file_paths, multi, alpha, heatmap_class,
+                                                                      show_top_x_classes)
         tot_time = '{:.2f}'.format(time.time() - start)
 
-        return render_template('result.html', heatmap=OUT_IMG_PATH, avg_pred=avg_pred, tot_time=tot_time)
+        # selected_file_paths to display image title and static_heatmap_paths for loading image/download
+        data = zip(selected_file_paths, static_heatmap_paths, avg_preds)
+
+        return render_template('result.html', data=data, tot_time=tot_time)
 
     else:
-        return render_template('index.html', img=DEMO_IMG_PATH)
+        # heatmaps = ['static/demo_img_heatmap.jpg', 'static/demo_img_heatmap.jpg', 'static/demo_img_heatmap.jpg']
+        # avg_preds = [[1, 2, 3], [1, 2, 3], [1, 2, 3]]
+        # files = ['jaja.jpy', 'adfdf', 'adsfsdf']
+        # data = zip(files, heatmaps, avg_preds)
+        #
+        # return render_template('result.html', data=data, tot_time='53.43')
 
-
-def generate_heatmap(multi, alpha, heatmap_class, show_top_x_classes):
-    im = cv2.cvtColor(cv2.imread(DEMO_IMG_PATH), cv2.COLOR_BGR2RGB).tolist()
-
-    api_configs = {
-        'multi': multi,
-        'image': im,
-        'overlay_alpha': alpha,
-        'heatmap_class': heatmap_class,
-        'show_top_x_classes': show_top_x_classes
-    }
-
-    client = Algorithmia.client('simSF2RynCb7tuq3WjGq6EuxymG1')
-    algo = client.algo('adsifubadsiufb/MyGithubHeatmapDemo/0.1.4')
-    res = algo.pipe(api_configs).result
-
-    heatmap = np.array(res['heatmap']).astype(np.uint8)
-    avg_pred = res['avg_pred'].split('\n')
-
-    cv2.imwrite(OUT_IMG_PATH, cv2.cvtColor(heatmap, cv2.COLOR_RGB2BGR))
-
-    return avg_pred
+        return render_template('index.html')
 
 
 if __name__ == '__main__':

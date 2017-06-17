@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>HeatmapGen</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -58,11 +58,12 @@
 
         <p>Try:</p>
 
-        <p>View which parts of the demo image below <b>(512x512)</b> is classified as gray matter, white matter,
+        <p>Upload an image of your own or choose one below (multiple allowed) to view which parts of the image is
+            classified as gray matter, white matter,
             oligodendroglioma (lesion), or just blank space</p>
 
-        <p>A deep CNN model trained on images of size <b>256x256</b> is being called as an api for this demo. If an
-            error appears, it is most likely because I have run out of free credits for the month (sorry).</p>
+        <p>A deep CNN model trained on images of size <b>512x512</b> is being called as an api for this demo. If an
+            error appears, it is most likely because I have run out of credits. Check back the following month!</p>
 
 
         <p><a class="btn btn-primary btn-lg" href="https://github.com/kevinfaust0308/KerasImageHeatmapGenerator"
@@ -70,9 +71,13 @@
     </div>
 
 
-    <img id='demo-img' src="../{{ img }}"/>
+    <form method="post" action="/" enctype="multipart/form-data">
 
-    <form method="post" action="/">
+        <div class="form-group form-element">
+            <h3><label for="multiplefiles">Select file(s) at least 512x512 pixels</label></h3>
+            <input type="file" id="multiplefiles" name="multiplefiles" multiple accept="image/*">
+        </div>
+
 
         <div class="form-check form-element">
             <label class="form-check-label">
@@ -117,7 +122,7 @@
 </div>
 
 <div id="overlay">
-    <h3>May take up to a minute to generate</h3>
+    <h3>Generating</h3>
     <div class="sk-folding-cube">
         <div class="sk-cube1 sk-cube"></div>
         <div class="sk-cube2 sk-cube"></div>

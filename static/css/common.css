@@ -1,11 +1,10 @@
-#demo-img {
-    display: block;
-    margin: 0 auto;
-    max-width: 30%;
-}
-
 * {
     font-family: 'Raleway', sans-serif;
+}
+
+.titletext {
+    margin-top: 0;
+    text-align: center;
 }
 
 body {

@@ -1,0 +1,28 @@
+img {
+    width: 80%;
+}
+
+hr {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.imgpathtext {
+    text-align: center;
+}
+
+.homebutton {
+    text-align: center;
+}
+
+.row > div {
+    text-align: center;
+}
+
+.row {
+    margin-bottom: 40px;
+}
+
+.wrapper {
+    padding: 1%;
+}
