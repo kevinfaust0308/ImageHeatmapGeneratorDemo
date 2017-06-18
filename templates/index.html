@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>HeatmapGen</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -42,6 +44,7 @@
     <div class="jumbotron">
 
         <h1>Heatmap Generator</h1>
+        <h2>(demo on brain tissues)</h2>
 
         <div id="example-heatmap-container">
 
@@ -56,7 +59,11 @@
             <img class="example-heatmap" src="../static/example_image_heatmap.png">
         </div>
 
-        <p>Try:</p>
+        <p>Works well with medical imaging or other images where spacial structure is not-important. Concretely, images
+            that are comprised of repeated smaller images which are identifiable even if the entire image is not present
+            are required.</p>
+
+        <p><strong>Try:</strong></p>
 
         <p>Upload an image of your own or choose one below (multiple allowed) to view which parts of the image is
             classified as gray matter, white matter,
@@ -74,12 +81,43 @@
     <form method="post" action="/" enctype="multipart/form-data">
 
         <div class="form-group form-element">
-            <h3><label for="multiplefiles">Select file(s) at least 512x512 pixels</label></h3>
-            <input type="file" id="multiplefiles" name="multiplefiles" multiple accept="image/*">
+            <h3>1. Upload file(s) at least 512x512 pixels</h3><br>
+            <input type="file" name="upload_img" multiple accept="image/*">
+
+            <br>
+            <h3>Or select sample images below (1024x1024 pixels)</h3>
+            <div class="row">
+                <div class="col-sm-4">
+                    <label class="form-check-label">
+                        <input name='demo_img' class="form-check-input" type="checkbox" value="Lesion1.jpg">
+                        Oligodendroglioma (lesion)
+                    </label>
+                    <img class='selected-demo-img demo-img' src="../static/Lesion1.jpg"/>
+                </div>
+                <div class="col-sm-4">
+                    <label class="form-check-label">
+                        <input name='demo_img' class="form-check-input" type="checkbox" value="Gray1.jpg">
+                        Gray matter
+                    </label>
+                    <img class='demo-img' src="../static/Gray1.jpg"/>
+                </div>
+                <div class="col-sm-4">
+                    <label class="form-check-label">
+                        <input name='demo_img' class="form-check-input" type="checkbox" value="White1.jpg">
+                        White matter
+                    </label>
+                    <img class='demo-img' src="../static/White1.jpg"/>
+                </div>
+
+            </div>
+
         </div>
+
+        <hr>
 
 
         <div class="form-check form-element">
+            <h3>2. Configurations</h3><br>
             <label class="form-check-label">
                 <input name='multi' class="form-check-input" type="checkbox" id="multi-layer-checkbox">
                 Generate multi-layered heatmap

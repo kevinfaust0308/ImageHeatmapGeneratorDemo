@@ -16,7 +16,7 @@
     background-color: #EDE6F5;
 }
 
-.jumbotron h1 {
+.jumbotron h1, .jumbotron h2 {
     text-align: center;
 }
 
@@ -26,4 +26,10 @@
 
 form label {
     font-size: 18px;
+}
+
+/*sample images to choose */
+
+.demo-img {
+    width: 100%;
 }

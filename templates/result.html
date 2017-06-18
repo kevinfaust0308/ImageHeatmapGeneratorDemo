@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>HeatmapGen</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -36,7 +38,7 @@
 
 <div class="container wrapper">
 
-    <div class="alert alert-success" role="alert">
+    <div class="alert alert-success" role="alert" style="text-align: center">
         <strong>Completed!</strong> Took {{ tot_time }} seconds for heatmap and average predictions generation
     </div>
 
@@ -48,22 +50,23 @@
         <button type="submit" class="btn btn-default">Generate again</button>
     </form>
 
+    <br>
 
-        {% for row in data %}
+    {% for row in data %}
 
         <div class="row">
 
-            <div class="col-sm-12">
+            <div class="col-sm-12 result">
 
-                <h4 class="imgpathtext">{{ row[0].filename }}</h4>
-                <hr>
+                <h3 class="result-img-path">{{ row[0] }}</h3>
 
-                <img src="{{ row[1] }}"/>
-                <hr>
+                <img class="result-img" src="{{ row[1] }}"/>
 
-                {% for pred in row[2] %}
-                    <p>{{ pred }}</p>
-                {% endfor %}
+                <div class="result-pred-scores">
+                    {% for pred in row[2] %}
+                        <p>{{ pred }}</p>
+                    {% endfor %}
+                </div>
 
                 <a href="{{ row[1] }}" download="heatmap" class="btn btn-primary" role="button">Download</a>
 
@@ -76,9 +79,6 @@
     {% endfor %}
 
 </div>
-
-
-
 
 
 </body>

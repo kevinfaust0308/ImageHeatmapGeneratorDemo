@@ -14,22 +14,47 @@ app.config['UPLOAD_FOLDER'] = 'uploads/'
 def home_screen():
     if request.method == 'POST':
 
+        # import sys
+        #
+        # print('file name of uploaded: ' + str(request.files.getlist("upload_img")[0].filename), file=sys.stderr)
+        # print('file uploaded: ' + str(request.files.getlist("upload_img")[0]), file=sys.stderr)
+        #
+        # print('file name of demo: ' + str(request.form.getlist("demo_img")), file=sys.stderr)
+        # #print('file name of demo: ' + str(request.form.getlist("demo_img")[0]), file=sys.stderr)
+        #
+        # return 'ja'
+
+
         # get form data
         multi = 'multi' in request.form
         alpha = float(request.form['overlay_alpha'])
         heatmap_class = request.form['heatmap_class']
         show_top_x_classes = int(request.form['show_top_x_classes'])
 
-        # get all selected files
-        selected_file_paths = request.files.getlist("multiplefiles")
-
+        # to hold all the uploaded image paths on our flask server which we will upload to our api
         uploaded_flask_files = []
-        for f in selected_file_paths:
-            # upload
-            filename = secure_filename(f.filename)
-            f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            filename = 'uploads/' + filename
-            uploaded_flask_files.append(filename)
+        # names of all our file paths to show on results screen
+        selected_file_paths = []
+
+        # check if any files were uploaded
+        # even if nothing was sent, we will still have 1 file object with a empty file name
+        if request.files.getlist("upload_img")[0].filename:
+
+            # add all the file names to our list
+            selected_file_paths += [fileobj.filename for fileobj in request.files.getlist("upload_img")]
+
+            # upload each locally selected file to our server
+            for file_obj in request.files.getlist("upload_img"):
+                # upload
+                filename = secure_filename(file_obj.filename)
+                file_obj.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                filename = 'uploads/' + filename
+                uploaded_flask_files.append(filename)
+
+        selected_file_paths += ["(DEMO) " + name for name in request.form.getlist("demo_img")]
+        uploaded_flask_files += ["static/" + name for name in request.form.getlist('demo_img')]
+
+        # TODO: currently assuming at least 1 image is selected/uploaded
 
         # upload the images uploaded to flask to our api which will temporary store the images for 24 hours
         api_file_paths = upload_files_to_api(uploaded_flask_files)
@@ -46,7 +71,7 @@ def home_screen():
         return render_template('result.html', data=data, tot_time=tot_time)
 
     else:
-        # heatmaps = ['static/demo_img_heatmap.jpg', 'static/demo_img_heatmap.jpg', 'static/demo_img_heatmap.jpg']
+        # heatmaps = ['static/Lesion1.jpg', 'static/Lesion1.jpg', 'static/Lesion1.jpg']
         # avg_preds = [[1, 2, 3], [1, 2, 3], [1, 2, 3]]
         # files = ['jaja.jpy', 'adfdf', 'adsfsdf']
         # data = zip(files, heatmaps, avg_preds)

@@ -1,28 +1,31 @@
-img {
-    width: 80%;
-}
-
-hr {
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-.imgpathtext {
-    text-align: center;
+.wrapper {
+    padding: 1%;
 }
 
 .homebutton {
     text-align: center;
 }
 
-.row > div {
+.result {
     text-align: center;
 }
 
-.row {
-    margin-bottom: 40px;
+.result-img-path {
+    text-align: center;
+    width: 80%;
+    padding-bottom: 20px;
+    margin: 0 auto 20px;
+    border-bottom: 2px solid #d3d3d3;
 }
 
-.wrapper {
-    padding: 1%;
+.result-img {
+    width: 80%;
+}
+
+.result-pred-scores {
+    margin: 20px 0;
+}
+
+.row {
+    padding: 2%;
 }

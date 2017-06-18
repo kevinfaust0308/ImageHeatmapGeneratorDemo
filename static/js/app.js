@@ -16,3 +16,4 @@ $('#multi-layer-checkbox').change(function () {
         $('#single-layer-options').show();
     }
 });
+
