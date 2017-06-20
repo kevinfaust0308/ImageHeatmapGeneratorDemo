@@ -8,6 +8,7 @@ from heatmap_api import generate_heatmaps_and_preds, upload_files_to_api
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads/'
+os.makedirs(os.path.dirname(app.config['UPLOAD_FOLDER']), exist_ok=True)  # create uploads directory if not exist yet
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -48,7 +49,7 @@ def home_screen():
                 # upload
                 filename = secure_filename(file_obj.filename)
                 file_obj.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                filename = 'uploads/' + filename
+                filename = app.config['UPLOAD_FOLDER'] + filename
                 uploaded_flask_files.append(filename)
 
         selected_file_names += ["(DEMO) " + name for name in request.form.getlist("demo_img")]

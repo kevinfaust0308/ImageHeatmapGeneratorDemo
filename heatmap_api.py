@@ -2,6 +2,17 @@ import Algorithmia
 import uuid
 import os
 
+# api configurations
+API_KEY = 'simSF2RynCb7tuq3WjGq6EuxymG1'
+ALGORITHM = 'adsifubadsiufb/MyGithubHeatmapDemo/0.1.8'
+client = Algorithmia.client(API_KEY)
+
+# file io
+TEMP_API_IMG = "data://.algo/adsifubadsiufb/MyGithubHeatmapDemo/temp/"
+HEATMAP_OUTPUT = "static/heatmaps/"
+
+os.makedirs(HEATMAP_OUTPUT, exist_ok=True)  # create heatmaps directory if not exist yet
+
 
 def upload_files_to_api(file_paths):
     '''
@@ -11,13 +22,10 @@ def upload_files_to_api(file_paths):
     :return: file paths of images on the api server
     '''
 
-    API_KEY = 'simSF2RynCb7tuq3WjGq6EuxymG1'
-    client = Algorithmia.client(API_KEY)
-
     temp_image_paths = []
 
     for fp in file_paths:
-        temp_img_path = "data://.algo/adsifubadsiufb/MyGithubHeatmapDemo/temp/{}.jpg".format(str(uuid.uuid4()))
+        temp_img_path = TEMP_API_IMG + "{}.jpg".format(str(uuid.uuid4()))
 
         # upload image to private temporary data hosting
         client.file(temp_img_path).putFile(fp)
@@ -35,10 +43,6 @@ def generate_heatmaps_and_preds(file_paths, multi, alpha, heatmap_class, show_to
     :return: file path to heatmap within static folder, average prediction
     '''
 
-    # configs
-    API_KEY = 'simSF2RynCb7tuq3WjGq6EuxymG1'
-    ALGORITHM = 'adsifubadsiufb/MyGithubHeatmapDemo/0.1.8'
-    client = Algorithmia.client(API_KEY)
     api_configs = {
         'multi': multi,
         'overlay_alpha': alpha,
@@ -65,7 +69,7 @@ def generate_heatmaps_and_preds(file_paths, multi, alpha, heatmap_class, show_to
         heatmap_path = client.file(heatmap_path).getFile().name
         # move from temp folder to our static folder for html display
         temp_file_name = heatmap_path.split("\\")[-1]
-        static_heatmap_path = "static/heatmaps/{}.jpg".format(temp_file_name)
+        static_heatmap_path = HEATMAP_OUTPUT + "{}.jpg".format(temp_file_name)
         os.rename(heatmap_path, static_heatmap_path)
 
         # add our generated result to our list
