@@ -1,5 +1,5 @@
 #wrapper {
-    padding: 3%;
+    padding: 70px 3% 3%;
 }
 
 #example-heatmap-container {
@@ -41,5 +41,4 @@ form label {
     width: 100%;
     text-align: center;
     display: none;
-    font-size: 18px;
 }

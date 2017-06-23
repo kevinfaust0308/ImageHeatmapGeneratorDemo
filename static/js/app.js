@@ -26,11 +26,11 @@ $('#heatmap-generate-form').on('submit', function (e) {
     has_uploaded_img = $('#upload-file').val();
 
     if (has_demo_img_selected || has_uploaded_img) {
-        $('#no-image-selected-alert').hide();
+
         $('#overlay').css('visibility', 'visible');
         $('body').css('overflow', 'hidden');
     } else {
         e.preventDefault(e);
-        $('#no-image-selected-alert').fadeIn();
+        $('#no-image-selected-alert').fadeIn().delay(5000).fadeOut();
     }
 });
