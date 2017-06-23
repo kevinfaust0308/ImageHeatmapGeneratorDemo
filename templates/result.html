@@ -47,14 +47,14 @@
     </div>
 
     <form action="/" method="GET" class="homebutton">
-        <button type="submit" class="btn btn-default">Generate again</button>
+        <button type="submit" class="btn btn-success">Generate again</button>
     </form>
 
     <br>
 
     {% for row in data %}
 
-        <div class="row">
+        <div class="row result-container">
 
             <div class="col-sm-12 result">
 
@@ -68,7 +68,7 @@
                     {% endfor %}
                 </div>
 
-                <a href="{{ row[1] }}" download="heatmap" class="btn btn-primary" role="button">Download</a>
+                <a href="{{ row[1] }}" download="heatmap" class="btn btn-info" role="button">Download</a>
 
             </div>
 

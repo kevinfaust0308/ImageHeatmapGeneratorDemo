@@ -1,10 +1,10 @@
+import os
+import time
+
 from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
 
-import time
-import os
-
-from heatmap_api import generate_heatmaps_and_preds, upload_files_to_api
+from scripts.heatmap_api import generate_heatmaps_and_preds, upload_files_to_api
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads/'
@@ -53,9 +53,7 @@ def home_screen():
                 uploaded_flask_files.append(filename)
 
         selected_file_names += ["(DEMO) " + name for name in request.form.getlist("demo_img")]
-        uploaded_flask_files += ["static/" + name for name in request.form.getlist('demo_img')]
-
-        # TODO: currently assuming at least 1 image is selected/uploaded
+        uploaded_flask_files += [os.path.join("static", "demo_imgs", name) for name in request.form.getlist('demo_img')]
 
         # upload the images uploaded to flask to our api which will temporary store the images for 24 hours
         api_file_paths = upload_files_to_api(uploaded_flask_files)

@@ -1,3 +1,7 @@
+.titletext h1 {
+    text-align: center;
+}
+
 .wrapper {
     padding: 1%;
 }
@@ -23,9 +27,11 @@
 }
 
 .result-pred-scores {
+    font-weight: bold;
+    font-size: 18px;
     margin: 20px 0;
 }
 
-.row {
+.result-container {
     padding: 2%;
 }

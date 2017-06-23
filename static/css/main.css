@@ -33,3 +33,13 @@ form label {
 .demo-img {
     width: 100%;
 }
+
+/* user didnt select image */
+#no-image-selected-alert {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    text-align: center;
+    display: none;
+    font-size: 18px;
+}

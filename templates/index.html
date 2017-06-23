@@ -50,13 +50,13 @@
 
             <p>Example on a 27832 x 18867 tile</p>
 
-            <img class="example-heatmap" src="../static/example_image_original.png">
+            <img class="example-heatmap" src="../static/demo_imgs/example_image_original.png">
 
 
             <img src="../static/arrow.png">
 
 
-            <img class="example-heatmap" src="../static/example_image_heatmap.png">
+            <img class="example-heatmap" src="../static/demo_imgs/example_image_heatmap.png">
         </div>
 
         <p>Works well with medical imaging or other images where spacial structure is not-important. Concretely, images
@@ -78,35 +78,35 @@
     </div>
 
 
-    <form method="post" action="/" enctype="multipart/form-data">
+    <form id="heatmap-generate-form" method="post" action="/" enctype="multipart/form-data">
 
         <div class="form-group form-element">
             <h3>1. Upload file(s) at least 512x512 pixels</h3><br>
-            <input type="file" name="upload_img" multiple accept="image/*">
+            <input id="upload-file" type="file" name="upload_img" multiple accept="image/*">
 
             <br>
             <h3>Or select sample images below (1024x1024 pixels)</h3>
-            <div class="row">
+            <div class="row" id="demo-img-checkboxes">
                 <div class="col-sm-4">
                     <label class="form-check-label">
                         <input name='demo_img' class="form-check-input" type="checkbox" value="Lesion1.jpg">
                         Oligodendroglioma (lesion)
                     </label>
-                    <img class='selected-demo-img demo-img' src="../static/Lesion1.jpg"/>
+                    <img class='selected-demo-img demo-img' src="../static/demo_imgs/Lesion1.jpg"/>
                 </div>
                 <div class="col-sm-4">
                     <label class="form-check-label">
                         <input name='demo_img' class="form-check-input" type="checkbox" value="Gray1.jpg">
                         Gray matter
                     </label>
-                    <img class='demo-img' src="../static/Gray1.jpg"/>
+                    <img class='demo-img' src="../static/demo_imgs/Gray1.jpg"/>
                 </div>
                 <div class="col-sm-4">
                     <label class="form-check-label">
                         <input name='demo_img' class="form-check-input" type="checkbox" value="White1.jpg">
                         White matter
                     </label>
-                    <img class='demo-img' src="../static/White1.jpg"/>
+                    <img class='demo-img' src="../static/demo_imgs/White1.jpg"/>
                 </div>
 
             </div>
@@ -160,7 +160,7 @@
 </div>
 
 <div id="overlay">
-    <h3>Generating</h3>
+    <h3>Generating heatmap</h3>
     <div class="sk-folding-cube">
         <div class="sk-cube1 sk-cube"></div>
         <div class="sk-cube2 sk-cube"></div>
@@ -168,6 +168,8 @@
         <div class="sk-cube3 sk-cube"></div>
     </div>
 </div>
+
+<div id="no-image-selected-alert" class="alert alert-danger" role="alert">Please select at least 1 image</div>
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
