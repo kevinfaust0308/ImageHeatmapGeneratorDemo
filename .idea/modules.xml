@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/AlgorithmiaHeatmap.iml" filepath="$PROJECT_DIR$/.idea/AlgorithmiaHeatmap.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/MyHeatmapDemoSite.iml" filepath="$PROJECT_DIR$/.idea/MyHeatmapDemoSite.iml" />
     </modules>
   </component>
 </project>
