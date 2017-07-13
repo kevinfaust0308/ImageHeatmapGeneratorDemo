@@ -1,7 +1,7 @@
 import Algorithmia
 import uuid
 import os
-import shutil
+import glob
 
 # api configurations
 API_KEY = 'simSF2RynCb7tuq3WjGq6EuxymG1'
@@ -35,6 +35,16 @@ def upload_files_to_api(file_paths):
         temp_image_paths.append(temp_img_path)
 
     return temp_image_paths
+
+
+def delete_uploaded_images(upload_dir):
+    '''
+    Delete all the files in the upload directory
+    '''
+
+    files = glob.glob(os.path.join(upload_dir, '*'))
+    for f in files:
+        os.remove(f)
 
 
 def generate_heatmaps_and_preds(file_paths, multi, alpha, heatmap_class, show_top_x_classes):

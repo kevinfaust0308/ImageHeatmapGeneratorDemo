@@ -4,10 +4,11 @@ import time
 from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
 
-from scripts.heatmap_api import generate_heatmaps_and_preds, upload_files_to_api
+from scripts.heatmap_api import generate_heatmaps_and_preds, upload_files_to_api, delete_uploaded_images
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = 'uploads/'
+basepath = os.path.abspath('.')
+app.config['UPLOAD_FOLDER'] = os.path.join(basepath, 'uploads')
 os.makedirs(os.path.dirname(app.config['UPLOAD_FOLDER']), exist_ok=True)  # create uploads directory if not exist yet
 
 
@@ -53,10 +54,15 @@ def home_screen():
                 uploaded_flask_files.append(filename)
 
         selected_file_names += ["(DEMO) " + name for name in request.form.getlist("demo_img")]
-        uploaded_flask_files += [os.path.join("static", "demo_imgs", name) for name in request.form.getlist('demo_img')]
+        demo_flask_files = [os.path.join(basepath, "static", "demo_imgs", name) for name in
+                            request.form.getlist('demo_img')]
+        uploaded_flask_files += demo_flask_files
 
         # upload the images uploaded to flask to our api which will temporary store the images for 24 hours
         api_file_paths = upload_files_to_api(uploaded_flask_files)
+
+        # since images are uploaded to api, we no longer need the user=uploaded-files locally so delete them
+        delete_uploaded_images(app.config['UPLOAD_FOLDER'])
 
         start = time.time()
         # generate heatmaps and predictions
